@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(int index) {
                 currentSelectYear = yearAdapter.getItem(index);
                 Integer[] dayOfMonth = getDayOfMonth(currentSelectYear, currentSelectMoth);
-                if (mDayAdapter.indexOf(currentSelectDay) == mDayAdapter.getItemsCount() && dayOfMonth.length > mDayAdapter.indexOf(currentSelectDay)) {
+                if (mDayAdapter.indexOf(currentSelectDay) == mDayAdapter.getItemsCount()-1 && dayOfMonth.length-1 > mDayAdapter.indexOf(currentSelectDay)) {
                     mWvDay.setCurrentItem(dayOfMonth.length);
                 }
                 mDayAdapter.setYear(dayOfMonth);
@@ -96,14 +96,19 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(int index) {
                 currentSelectMoth = monthAdapter.getItem(index);
                 Integer[] dayOfMonth = getDayOfMonth(currentSelectYear, currentSelectMoth);
-                if (mDayAdapter.indexOf(currentSelectDay) == mDayAdapter.getItemsCount() && dayOfMonth.length > mDayAdapter.indexOf(currentSelectDay)) {
+                if (mDayAdapter.indexOf(currentSelectDay) == mDayAdapter.getItemsCount()-1 && dayOfMonth.length-1 > mDayAdapter.indexOf(currentSelectDay)) {
                     mWvDay.setCurrentItem(dayOfMonth.length);
                 }
                 mDayAdapter.setYear(dayOfMonth);
                 mWvDay.setAdapter(mDayAdapter);
             }
         });
-
+        mWvDay.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                currentSelectDay = mDayAdapter.getItem(index);
+            }
+        });
         mWvYear.setCurrentItem(yearAdapter.indexOf(currentSelectYear));
         mWvMonth.setCurrentItem(monthAdapter.indexOf(currentSelectMoth));
         mWvDay.setCurrentItem(mDayAdapter.indexOf(currentSelectDay));
@@ -178,9 +183,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (month > 7) {//小的月份
                 return dayOfMonthSmall;
-            } else if (month < 7) {//大的月份
-                return dayOfMonthBig;
-            } else {
+            } else {//大的月份
                 return dayOfMonthBig;
             }
         }
