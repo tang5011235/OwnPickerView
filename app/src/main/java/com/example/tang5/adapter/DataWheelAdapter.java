@@ -10,29 +10,29 @@ import java.util.Arrays;
  * 邮箱：tang5011235@163.com
  */
 public class DataWheelAdapter<T> implements WheelAdapter<T> {
-    private T[] year;
+    private T[] date;
 
-    public DataWheelAdapter(T[] year) {
-        this.year = year;
+    public DataWheelAdapter(T[] date) {
+        this.date = date;
     }
 
     @Override
     public int getItemsCount() {
-        return year.length;
+        return date.length;
     }
 
     @Override
     public T getItem(int index) {
-        return year[index];
+        return date[index];
     }
 
 
     @Override
     public int indexOf(T value) {
-        return Arrays.binarySearch(year, value);
+        return Arrays.binarySearch(date, value);
     }
 
-    public void setYear(T[] year) {
-        this.year = year;
+    public void setDate(T[] date) {
+        this.date = date;
     }
 }
