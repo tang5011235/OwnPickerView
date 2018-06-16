@@ -23,7 +23,7 @@ import java.util.Date;
  * version:
  * @description:
  */
-public class FourParametersTimeWheelView {
+public class FourParametersTimeWheelView implements View.OnClickListener {
     private View view;
     private WheelView mWvYear;
     private WheelView mWvMonth;
@@ -59,6 +59,8 @@ public class FourParametersTimeWheelView {
     private Integer[] mCurrentDayOfMonth;
     private DataWheelAdapter<Integer> mDayAdapter;
 
+    private CancelListener mCancelListener;
+    private SureListener mSureListener;
 
     public FourParametersTimeWheelView(View view) {
         this.view = view;
@@ -72,6 +74,9 @@ public class FourParametersTimeWheelView {
         mTvCancle = view.findViewById(R.id.tv_cancel);
         mTvDate = view.findViewById(R.id.tv_date);
         mWvPeriodOfTime = view.findViewById(R.id.wv_period_of_time);
+
+        mTvSure.setOnClickListener(this);
+        mTvCancle.setOnClickListener(this);
 
         setCircle(false);
 
@@ -196,7 +201,7 @@ public class FourParametersTimeWheelView {
             Date date = simpleDateFormat.parse(builder.toString());
             calendar.setTime(date);
             calendar.get(Calendar.DAY_OF_WEEK);
-            mTvDate.setText(weekDays[calendar.get(Calendar.DAY_OF_WEEK)-1]);
+            mTvDate.setText(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -274,11 +279,46 @@ public class FourParametersTimeWheelView {
 
     private DateListener mDateListener;
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_sure:
+                if (mSureListener != null) {
+                    mSureListener.onSure();
+                }
+                break;
+            case R.id.tv_cancel:
+                if (mCancelListener != null) {
+                    mCancelListener.onCancel();
+                }
+                break;
+            default:
+
+                break;
+        }
+    }
+
     public interface DateListener {
         void onDateSelected(int year, int month, int day, String period);
     }
 
     public void setDateListener(DateListener dateListener) {
         mDateListener = dateListener;
+    }
+
+    public interface CancelListener {
+        void onCancel();
+    }
+
+    public interface SureListener {
+        void onSure();
+    }
+
+    public void setSureListener(SureListener sureListener) {
+        mSureListener = sureListener;
+    }
+
+    public void setCancelListener(CancelListener cancelListener) {
+        mCancelListener = cancelListener;
     }
 }

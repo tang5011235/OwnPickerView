@@ -26,6 +26,8 @@ public class PeriodTimeWheelView extends DialogFragment {
 
     private View mRootView;
     private FourParametersTimeWheelView.DateListener mDateListener;
+    private FourParametersTimeWheelView.SureListener mSureListener;
+    private FourParametersTimeWheelView.CancelListener mCancelListener;
     private FourParametersTimeWheelView mWheelView;
 
     @Override
@@ -42,6 +44,12 @@ public class PeriodTimeWheelView extends DialogFragment {
         mWheelView = new FourParametersTimeWheelView(mRootView);
         if (mDateListener != null) {
             mWheelView.setDateListener(mDateListener);
+        }
+        if (mSureListener != null) {
+            mWheelView.setSureListener(mSureListener);
+        }
+        if (mCancelListener != null) {
+            mWheelView.setCancelListener(mCancelListener);
         }
         mWheelView.setDate();
         Dialog dialog = new Dialog(getActivity(), R.style.MyDialog);
@@ -64,5 +72,13 @@ public class PeriodTimeWheelView extends DialogFragment {
 
     public void setDateListener(FourParametersTimeWheelView.DateListener dateListener) {
         mDateListener = dateListener;
+    }
+
+    public void setSureListener(FourParametersTimeWheelView.SureListener sureListener) {
+        mSureListener = sureListener;
+    }
+
+    public void setCancelListener(FourParametersTimeWheelView.CancelListener cancelListener) {
+        mCancelListener = cancelListener;
     }
 }
