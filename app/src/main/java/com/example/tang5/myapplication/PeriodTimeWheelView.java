@@ -24,43 +24,45 @@ import android.view.WindowManager;
  */
 public class PeriodTimeWheelView extends DialogFragment {
 
-	private View mRootView;
+    private View mRootView;
+    private FourParametersTimeWheelView.DateListener mDateListener;
+    private FourParametersTimeWheelView mWheelView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.MyDialog);
+    }
 
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		//setStyle(DialogFragment.STYLE_NO_FRAME, R.style.MyDialog);
-	}
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-	@NonNull
-	@Override
-	public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        mRootView = LayoutInflater.from(getContext()).inflate(R.layout.view_four, (ViewGroup) (getActivity().findViewById(android.R.id.content)), false);
+        mWheelView = new FourParametersTimeWheelView(mRootView);
+        if (mDateListener != null) {
+            mWheelView.setDateListener(mDateListener);
+        }
+        mWheelView.setDate();
+        Dialog dialog = new Dialog(getActivity(), R.style.MyDialog);
 
-		mRootView = LayoutInflater.from(getContext()).inflate(R.layout.view_four, (ViewGroup) (getActivity().findViewById(android.R.id.content)), false);
-		FourParametersTimeWheelView wheelView = new FourParametersTimeWheelView(mRootView);
-		wheelView.setDate();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+        window.setAttributes(wlp);
+        dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
 
-		Dialog dialog = new Dialog(getActivity(),R.style.MyDialog);
+        dialog.setContentView(mRootView);
+        return dialog;
+    }
 
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams wlp = window.getAttributes();
-		wlp.gravity = Gravity.BOTTOM;
-		window.setAttributes(wlp);
-		dialog.getWindow()
-				.setGravity(Gravity.BOTTOM);
-		View decorView = dialog.getWindow().getDecorView();
-		decorView.setPadding(0,0,0,0);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
-
-		dialog.setContentView(mRootView);
-
-
-		return dialog;
-	}
-
-	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
+    public void setDateListener(FourParametersTimeWheelView.DateListener dateListener) {
+        mDateListener = dateListener;
+    }
 }

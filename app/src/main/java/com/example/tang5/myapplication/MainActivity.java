@@ -22,10 +22,18 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 		final PeriodTimeWheelView wheelView = new PeriodTimeWheelView();
+
 		mTvDate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				wheelView.setDateListener(new FourParametersTimeWheelView.DateListener() {
+					@Override
+					public void onDateSelected(int year, int month, int day, String period) {
+
+					}
+				});
 				wheelView.show(getSupportFragmentManager(),"1");
+
 			}
 		});
 

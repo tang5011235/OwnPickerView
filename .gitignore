@@ -75,3 +75,6 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
+.idea/vcs.xml
+app/libs/
+/app/src/test/
